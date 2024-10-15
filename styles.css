@@ -1,0 +1,285 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+}
+
+/* Rendre le header fixe */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0);
+    z-index: 2000; /* Toujours au-dessus des autres éléments */
+    transition: background 1s ease; /* Transition douce pour l'arrière-plan */
+}
+
+/* Ajouter un espace sous le header pour ne pas masquer le contenu */
+body {
+    padding-top: 80px; /* Ajuste la hauteur pour correspondre à la hauteur du header */
+}
+
+/* Dégradé lorsqu'on fait défiler la page */
+#main-header.scrolled {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.658) 0%, transparent 100%);
+}
+
+/* Conteneur de la grille */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 colonnes */
+    grid-auto-rows: 1fr; /* Lignes de hauteur égale */
+    gap: 3px; /* Espacement entre les éléments */
+    width: 100%; /* Largeur maximale du conteneur */
+  }
+  
+  /* Styles des éléments */
+  .container > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  /* Le dernier élément impaire occupe deux colonnes */
+  .container > *:nth-child(odd):last-child {
+    grid-column: span 2; /* L'élément occupe deux colonnes */
+  }
+  
+
+/* Styles de base pour le conteneur de l'image */
+.relative {
+    position: relative;
+    overflow: hidden; /* Pour garder l'image dans son conteneur lors du zoom */
+    border-radius: 10px; /* Si tu as des coins arrondis */
+}
+
+/* L'image et le zoom au survol */
+.relative img {
+    transition: transform 0.5s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.relative:hover img {
+    transform: scale(1.1);
+}
+
+/* Styles de base pour l'overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.relative:hover .overlay {
+    opacity: 1;
+}
+
+/* Tracé dynamique autour du titre */
+.overlay .glitch {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px; /* Espacement autour du texte */
+    color: white;
+    font-size: 2rem; /* Taille du texte */
+}
+
+.overlay .glitch::before,
+.overlay .glitch::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 2px solid white; /* Couleur et épaisseur du tracé */
+    transition: all 0.5s ease; /* Transition fluide sur 0.5s */
+}
+
+.overlay .glitch::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top-width: 2px;
+    border-left-width: 2px;
+    border-bottom-width: 0;
+    border-right-width: 0;
+}
+
+.overlay .glitch::after {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+}
+
+/* Animation du tracé lors du survol */
+.relative:hover .overlay .glitch::before,
+.relative:hover .overlay .glitch::after {
+    width: 100%; /* Tracé horizontal */
+    height: 100%; /* Tracé vertical */
+}
+
+
+.logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Styles de base pour les boutons de navigation */
+.nav-button {
+    position: relative;
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    margin-right: 20px;
+    padding-bottom: 5px;
+    font-family: Arial, sans-serif;
+}
+
+/* Pseudo-élément ::after pour créer la ligne sous le texte */
+.nav-button::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: grey;
+    transition: none;
+}
+
+/* Première animation lorsque la souris survole (0% à 50%) */
+.nav-button:hover::after {
+    animation: line-expand 0.5s cubic-bezier(.25, .1, .25, 1) forwards;
+}
+
+/* Deuxième animation lorsque la souris quitte (50% à 100%) */
+.nav-button::after {
+    animation: line-retract 0.5s cubic-bezier(.25, .1, .25, 1) forwards;
+}
+
+/* Keyframes pour l'extension */
+@keyframes line-expand {
+    from {
+        width: 0;
+        left: 0;
+    }
+    to {
+        width: 100%;
+        left: 0;
+    }
+}
+
+/* Keyframes pour la rétraction (à la sortie) */
+@keyframes line-retract {
+    from {
+        width: 100%;
+        left: 0;
+    }
+    to {
+        width: 0;
+        left: 100%;
+    }
+}
+
+/* Changement de couleur du texte au survol en gris */
+.nav-button:hover {
+    color: grey;
+}
+
+/* Bloc de présentation (caché par défaut) */
+.about-me-container {
+    position: fixed;
+    bottom: -100%; /* Placé en dehors de l'écran */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffffff, #f4f4f4); /* Dégradé subtil */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: bottom 0.8s ease-in-out; /* Transition fluide pour l'apparition */
+    z-index: 1000; /* Au-dessus des autres éléments */
+}
+
+/* Contenu du bloc de présentation */
+.about-me-content {
+    background: rgba(241, 241, 241, 0.8); /* Fond blanc semi-transparent */
+    padding: 30px;
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre discrète pour la profondeur */
+    text-align: center;
+    max-width: 800px;
+    width: 90%; /* Prend jusqu'à 90% de l'écran sur les petits écrans */
+    transition: transform 0.4s ease, opacity 0.4s ease; /* Animation douce à l'apparition */
+    opacity: 0; /* Caché au début */
+    transform: translateY(50px); /* Légèrement déplacé vers le bas */
+}
+
+/* Montrer le contenu lors de l'apparition */
+.about-me-container.active .about-me-content {
+    opacity: 1; /* Visible */
+    transform: translateY(0); /* Retourne à sa position initiale */
+}
+
+/* Style du titre */
+.about-title {
+    font-size: 3rem; /* Taille plus grande pour le titre */
+    color: #333; /* Couleur sombre élégante */
+    margin-bottom: 20px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 700;
+}
+
+/* Style du texte */
+.about-text {
+    font-size: 1.25rem; /* Taille du texte */
+    line-height: 1.6; /* Espacement entre les lignes */
+    color: #555; /* Couleur du texte subtilement gris */
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+/* Bouton de fermeture stylé */
+.close-button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Helvetica', sans-serif;
+    transition: background-color 0.3s ease; /* Transition douce pour le bouton */
+}
+
+.close-button:hover {
+    background-color: #555; /* Changement de couleur au survol */
+}
+
+/* Afficher le bloc (remonte depuis le bas) */
+.about-me-container.active {
+    bottom: 0; /* Faire remonter le bloc */
+}
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alexandre Scariot - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+  <!-- Header avec logo et menu de navigation -->
+  <header id="main-header" class="flex justify-between items-center p-6">
+    <div class="text-lg font-light">
+      <span class="font-bold">Alexandre Scariot</span> — Mes Projets
+    </div>
+    <nav class="flex space-x-6 text-sm">
+      <a class="nav-button" href="#">Work</a>
+      <a class="nav-button" href="#about">About Me</a>
+      <a class="nav-button" href="#">Contact</a>
+    </nav>
+</header>
+
+<div id="about-me-container" class="about-me-container">
+  <div class="about-me-content">
+    <h1 class="about-title">À propos de moi</h1>
+    <p class="about-text">
+      Je m'appelle Alexandre Scariot, développeur passionné par la création de solutions numériques interactives. Mon expertise en développement web, combinée à une approche centrée sur l'utilisateur, me permet de créer des expériences visuelles uniques. <br><br>
+      Découvrez mes projets pour en savoir plus sur mon parcours et mes compétences.
+    </p>
+    <!-- Bouton de fermeture stylé -->
+    <button id="close-about" class="close-button">Retour</button>
+  </div>
+</div>
+
+  
+  
+  <!-- Section principale avec les projets dynamiques -->
+  <main class="p-6">
+    <div class="max-w-screen-xl mx-auto">
+      <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-1">
+        <!-- Les projets dynamiques seront insérés ici par JavaScript -->
+      </div>
+    </div>
+  </main>
+  
+
+  <!-- Inclusion du fichier JavaScript -->
+  <script src="js/smoothScroll.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+  <script src="js/glitchEffect.js"></script> <!-- Inclusion du script pour l'effet glitch -->
+  <script src="js/app.js"></script>
+
+
+
+  
+</body>
+</html>
