@@ -1,17 +1,13 @@
-// Remplacer require par l'objet global contentful fourni par le CDN
-const client = contentful.createClient({
-  space: '6guyy4twbtlm',        // Remplacez par votre Space ID
-  accessToken: '51TzbP5qqsSgT35BNU3g3SM5KB1jkN8rFJhMQTtK7QM'  // Remplacez par votre Access Token
-});
-
 async function getProjects() {
   try {
-    const response = await client.getEntries({ content_type: 'project' }); // Utilisez 'project' comme content_type
-    return response.items;
+    const response = await fetch('/.netlify/functions/getProjects');
+    const projects = await response.json();
+    return projects;
   } catch (error) {
     console.error('Erreur lors de la récupération des projets:', error);
   }
 }
+
 
 getProjects().then((projects) => {
   const projectsContainer = document.getElementById('projects-container');
