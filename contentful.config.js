@@ -1,8 +1,22 @@
+require('dotenv').config();
 const contentful = require('contentful');
 
 const client = contentful.createClient({
-  space: '6guyy4twbtlm', // Remplacez par l'ID de votre espace
-  accessToken: '51TzbP5qqsSgT35BNU3g3SM5KB1jkN8rFJhMQTtK7QM', // Remplacez par votre token d'accès
+  space: process.env.CONTENTFUL_SPACE,
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
 });
 
-module.exports = client;
+exports.handler = async function () {
+  try {
+    const response = await client.getEntries({ content_type: 'project' });
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response.items),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Erreur lors de la récupération des projets' }),
+    };
+  }
+};

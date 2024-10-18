@@ -1,45 +1,49 @@
-let scrollPosition = window.pageYOffset; // Position de défilement actuelle
-let velocity = 0; // Vitesse initiale du défilement
-let isInertiaActive = false; // Pour savoir si l'inertie est en cours
+let scrollPosition = window.pageYOffset;
+let velocity = 0;
+let isInertiaActive = false;
 
 // Fonction pour déclencher un défilement fluide avec inertie
 function smoothScrollWithInertia(deltaY) {
-  // Applique immédiatement le mouvement sans accumulation de vélocité pour éviter le délai
-  scrollPosition += deltaY;  // Mouvement immédiat
-
-  // Ajoute la vélocité pour l'inertie, mais plus contrôlée
-  velocity += deltaY * 1;  // Ajuste la vélocité pour l'inertie
+  // Réduire l'impact du deltaY pour un contrôle plus précis du défilement
+  const adjustedDeltaY = deltaY * 0.1; // Diminue l'effet initial du mouvement
+  scrollPosition += adjustedDeltaY;
+  velocity += adjustedDeltaY * 0.2; // Ajuste la vélocité pour l'inertie (moins amplifiée)
 
   // Assurer que le défilement ne dépasse pas les limites de la page
   scrollPosition = Math.max(0, Math.min(scrollPosition, document.body.scrollHeight - window.innerHeight));
 
-  // Appliquer immédiatement la nouvelle position
+  // Appliquer la nouvelle position avec un comportement de défilement instantané
   window.scrollTo({
     top: scrollPosition,
-    behavior: 'auto'  // Défilement sans délai
+    behavior: 'auto'
   });
 
+  // Démarrer l'inertie si elle n'est pas déjà active
+  if (!isInertiaActive) {
+    isInertiaActive = true;
+    requestAnimationFrame(inertiaScroll);
+  }
 }
 
 // Fonction pour gérer l'inertie et la décélération
 function inertiaScroll() {
-  // Décélérer progressivement
-  velocity *= 0.45;
+  // Décélération progressive
+  velocity *= 0.9;
 
-  // Ajouter la vélocité à la position
+  // Ajouter la vélocité à la position de défilement
   scrollPosition += velocity;
 
-  // Limiter le défilement pour ne pas dépasser les bornes
+  // Limiter le défilement pour rester dans les bornes de la page
   scrollPosition = Math.max(0, Math.min(scrollPosition, document.body.scrollHeight - window.innerHeight));
 
   // Appliquer le défilement avec la nouvelle position
   window.scrollTo({
     top: scrollPosition,
-    behavior: 'auto'  // Défilement sans délai
+    behavior: 'auto'
   });
 
   // Continuer l'inertie tant que la vélocité est significative
-  if (Math.abs(velocity) > 0.5) {
+  if (Math.abs(velocity) > 0.1) {
     requestAnimationFrame(inertiaScroll);
   } else {
     isInertiaActive = false; // Arrêter l'inertie

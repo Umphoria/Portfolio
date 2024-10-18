@@ -1,5 +1,6 @@
 body {
     font-family: 'Helvetica', sans-serif;
+    padding-top: 80px; /* Compense la hauteur du header fixe */
 }
 
 /* Rendre le header fixe */
@@ -13,14 +14,111 @@ body {
     transition: background 1s ease; /* Transition douce pour l'arrière-plan */
 }
 
-/* Ajouter un espace sous le header pour ne pas masquer le contenu */
-body {
-    padding-top: 80px; /* Ajuste la hauteur pour correspondre à la hauteur du header */
+/* Icône de menu hamburger */
+#hamburger-menu {
+    position: relative; 
+    cursor: pointer; 
+    z-index: 3000; /* Assure que le bouton est cliquable au-dessus des autres éléments */
 }
+
+/* Menu mobile caché par défaut */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+/* Montrer le menu mobile lorsqu'il est actif */
+.mobile-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Boutons de navigation mobile */
+.mobile-nav-button {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 15px 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    padding-bottom: 5px;
+    font-family: Arial, sans-serif;
+    transition: all 0.3s ease; /* Pour animer la largeur lors du changement de texte */
+    white-space: nowrap; /* Empêche la coupure du texte sur plusieurs lignes */
+}
+
+.mobile-nav-button:hover {
+    color: grey;
+}
+
+/* Cache le menu principal sur les petits écrans */
+@media (max-width: 768px) {
+    #main-nav {
+        display: none; /* Cache le menu principal */
+    }
+}
+
 
 /* Dégradé lorsqu'on fait défiler la page */
 #main-header.scrolled {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.658) 0%, transparent 100%);
+}
+
+/* Conteneur pour la vidéo en background */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* La vidéo prend toute la hauteur de la fenêtre */
+    z-index: -1; /* Derrière le reste du contenu */
+    overflow: hidden;
+    background: white; /* Fond blanc pour le fondu */
+}
+
+/* Vidéo en arrière-plan */
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Remplit le conteneur sans déformer la vidéo */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transition douce pour le scale et l'opacité */
+}
+
+/* Espace de présentation pour révéler la vidéo */
+.hero-spacer {
+    height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    background: transparent; /* Arrière-plan transparent pour laisser apparaître la vidéo */
+}
+
+/* État initial des projets (avant d'entrer dans la vue) */
+.project-item {
+    opacity: 0;
+    transform: translateY(150px); /* Décalage vers le bas initial */
+    transition: transform 1s ease-out, opacity 1s ease-out; /* Animation de translation et d'opacité */
+}
+
+/* État final lorsque le projet est révélé */
+.project-item.reveal {
+    opacity: 1;
+    transform: translateY(0); /* Remonte à sa position normale */
 }
 
 /* Conteneur de la grille */
@@ -29,28 +127,27 @@ body {
     grid-template-columns: 1fr 1fr; /* 2 colonnes */
     grid-auto-rows: 1fr; /* Lignes de hauteur égale */
     gap: 3px; /* Espacement entre les éléments */
-    width: 100%; /* Largeur maximale du conteneur */
-  }
-  
-  /* Styles des éléments */
-  .container > * {
+    width: 100%;
+}
+
+/* Styles des éléments */
+.container > * {
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  }
-  
-  /* Le dernier élément impaire occupe deux colonnes */
-  .container > *:nth-child(odd):last-child {
+}
+
+/* Le dernier élément impair occupe deux colonnes */
+.container > *:nth-child(odd):last-child {
     grid-column: span 2; /* L'élément occupe deux colonnes */
-  }
-  
+}
 
 /* Styles de base pour le conteneur de l'image */
 .relative {
     position: relative;
-    overflow: hidden; /* Pour garder l'image dans son conteneur lors du zoom */
-    border-radius: 10px; /* Si tu as des coins arrondis */
+    overflow: hidden;
+    border-radius: 10px; /* Coins arrondis */
 }
 
 /* L'image et le zoom au survol */
@@ -89,9 +186,9 @@ body {
 .overlay .glitch {
     position: relative;
     display: inline-block;
-    padding: 10px 20px; /* Espacement autour du texte */
+    padding: 10px 20px;
     color: white;
-    font-size: 2rem; /* Taille du texte */
+    font-size: 2rem;
 }
 
 .overlay .glitch::before,
@@ -100,8 +197,8 @@ body {
     position: absolute;
     width: 0;
     height: 0;
-    border: 2px solid white; /* Couleur et épaisseur du tracé */
-    transition: all 0.5s ease; /* Transition fluide sur 0.5s */
+    border: 2px solid white;
+    transition: all 0.5s ease;
 }
 
 .overlay .glitch::before {
@@ -111,8 +208,6 @@ body {
     height: 100%;
     border-top-width: 2px;
     border-left-width: 2px;
-    border-bottom-width: 0;
-    border-right-width: 0;
 }
 
 .overlay .glitch::after {
@@ -122,18 +217,16 @@ body {
     height: 100%;
     border-bottom-width: 2px;
     border-right-width: 2px;
-    border-top-width: 0;
-    border-left-width: 0;
 }
 
 /* Animation du tracé lors du survol */
 .relative:hover .overlay .glitch::before,
 .relative:hover .overlay .glitch::after {
-    width: 100%; /* Tracé horizontal */
-    height: 100%; /* Tracé vertical */
+    width: 100%;
+    height: 100%;
 }
 
-
+/* Logo dans le coin des images */
 .logo {
     position: absolute;
     top: 10px;
@@ -154,6 +247,8 @@ body {
     margin-right: 20px;
     padding-bottom: 5px;
     font-family: Arial, sans-serif;
+    transition: all 0.3s ease; /* Pour animer la largeur lors du changement de texte */
+    white-space: nowrap; /* Empêche la coupure du texte sur plusieurs lignes */
 }
 
 /* Pseudo-élément ::after pour créer la ligne sous le texte */
@@ -168,12 +263,10 @@ body {
     transition: none;
 }
 
-/* Première animation lorsque la souris survole (0% à 50%) */
 .nav-button:hover::after {
     animation: line-expand 0.5s cubic-bezier(.25, .1, .25, 1) forwards;
 }
 
-/* Deuxième animation lorsque la souris quitte (50% à 100%) */
 .nav-button::after {
     animation: line-retract 0.5s cubic-bezier(.25, .1, .25, 1) forwards;
 }
@@ -190,7 +283,7 @@ body {
     }
 }
 
-/* Keyframes pour la rétraction (à la sortie) */
+/* Keyframes pour la rétraction */
 @keyframes line-retract {
     from {
         width: 100%;
@@ -202,50 +295,92 @@ body {
     }
 }
 
-/* Changement de couleur du texte au survol en gris */
 .nav-button:hover {
     color: grey;
 }
 
+/* Conteneur de texte pour le bouton */
+.button-text {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.4s ease, opacity 0.4s ease; /* Transition pour un mouvement fluide */
+    opacity: 1;
+  }
+  
+  /* Transition pour le texte lorsque le bouton est activé */
+  .nav-button.active .button-text {
+    transform: translateY(-20px); /* Le texte bouge vers le haut */
+    opacity: 0; /* Le texte disparaît */
+  }
+  
+  /* Nouveau texte qui apparaît */
+  .nav-button.active::after {
+    content: 'Close About Me';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%; /* Positionné sous le texte initial */
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    display: block;
+    text-align: center;
+  }
+  
+  /* Animation pour rendre le nouveau texte visible */
+  .nav-button.active:hover::after {
+    opacity: 1;
+    transform: translateY(0); /* Remonte pour prendre la place de l'ancien texte */
+  }
+
+  
+
 /* Bloc de présentation (caché par défaut) */
 .about-me-container {
     position: fixed;
-    bottom: -100%; /* Placé en dehors de l'écran */
+    top: 0px; /* Juste en dessous du header fixe */
     left: 0;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #ffffff, #f4f4f4); /* Dégradé subtil */
+    height: 100%; /* Prend toute la hauteur de l'écran */
+    background: linear-gradient(135deg, #ffffff71, #f4f4f4);
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: bottom 0.8s ease-in-out; /* Transition fluide pour l'apparition */
-    z-index: 1000; /* Au-dessus des autres éléments */
+    transition: transform 1s ease-in-out;
+    z-index: 1000;
+    transform: translateY(-100%);
+    backdrop-filter: blur(30px); /* ajoute un effet de flou de 10px à l'arrière-plan */
+    padding-bottom: 40px; /* ajoute un espace en bas pour les logos */
+}
+
+/* Afficher le bloc (remonte depuis le bas, sous le header) */
+.about-me-container.active {
+    transform: translateY(0);
 }
 
 /* Contenu du bloc de présentation */
 .about-me-content {
-    background: rgba(241, 241, 241, 0.8); /* Fond blanc semi-transparent */
-    padding: 30px;
-    border-radius: 10px; /* Coins arrondis */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre discrète pour la profondeur */
-    text-align: center;
-    max-width: 800px;
-    width: 90%; /* Prend jusqu'à 90% de l'écran sur les petits écrans */
-    transition: transform 0.4s ease, opacity 0.4s ease; /* Animation douce à l'apparition */
-    opacity: 0; /* Caché au début */
-    transform: translateY(50px); /* Légèrement déplacé vers le bas */
+    background: rgba(241, 241, 241, 0.452);
+    padding: 100px;
+    border-radius: 5px;
+    max-width: 1500px;
+    width: 40%;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    transform: translateY(50px);
+    position: relative; /* Ajouté pour le positionnement */
 }
 
 /* Montrer le contenu lors de l'apparition */
 .about-me-container.active .about-me-content {
-    opacity: 1; /* Visible */
-    transform: translateY(0); /* Retourne à sa position initiale */
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Style du titre */
 .about-title {
-    font-size: 3rem; /* Taille plus grande pour le titre */
-    color: #333; /* Couleur sombre élégante */
+    font-size: 3rem;
+    color: #333;
     margin-bottom: 20px;
     font-family: 'Helvetica', sans-serif;
     font-weight: 700;
@@ -253,33 +388,138 @@ body {
 
 /* Style du texte */
 .about-text {
-    font-size: 1.25rem; /* Taille du texte */
-    line-height: 1.6; /* Espacement entre les lignes */
-    color: #555; /* Couleur du texte subtilement gris */
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #555;
     font-family: 'Helvetica', sans-serif;
     font-weight: 300;
     margin-bottom: 30px;
 }
 
-/* Bouton de fermeture stylé */
-.close-button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-family: 'Helvetica', sans-serif;
-    transition: background-color 0.3s ease; /* Transition douce pour le bouton */
+/* Styles pour les liens sociaux */
+.social-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end; /* Aligne les logos à droite */
+    margin-top: 20px; /* espace entre le contenu et les logos */
+  }
+  
+  .social-links li {
+    margin-right: 30px; /* espace entre les logos */
+  }
+  
+  .social-links a {
+    color: #333; /* couleur des liens */
+    transition: color 0.2s ease;
+  }
+  
+  .social-links a:hover {
+    color: #666; /* couleur des liens au survol */
+  }
+  
+  .social-links i {
+    font-size: 44px; /* taille des icônes */
+  }
+
+
+  .link-container2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; /* Centre le texte horizontalement */
+    z-index: 2; /* Assurez-vous que le texte est au-dessus */
 }
 
-.close-button:hover {
-    background-color: #555; /* Changement de couleur au survol */
+/* Conteneur du texte avec un effet de flou sur la box */
+.text-container2 {
+    position: relative;
+    padding: 20px 40px;
+    display: inline-block;
+    min-width: fit-content;
+    transition: width 0.5s ease;
+    overflow: hidden;
+    cursor: pointer; /* Montre que le bloc est cliquable */
+    z-index: 2; /* Assurez-vous que le texte est au-dessus */
+    backdrop-filter: blur(20px); /* Ajoute un effet de flou au fond de la box */
+    background: rgba(255, 255, 255, 0.1); /* Fond léger pour accentuer le flou */
 }
 
-/* Afficher le bloc (remonte depuis le bas) */
-.about-me-container.active {
-    bottom: 0; /* Faire remonter le bloc */
+/* Texte avec mix-blend-mode */
+.text-content2 {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    mix-blend-mode: difference; /* Applique le mode de fusion différence au texte */
 }
 
+.base-text2, .hidden-text2 {
+    font-size: 48px;
+    font-family: Arial, sans-serif;
+    color: white; /* Assurez-vous d'avoir une couleur qui contraste avec l'arrière-plan */
+}
+
+.hidden-text2 {
+    display: inline-block;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-width 0.5s ease;
+}
+
+/* Lorsque vous survolez, la largeur s'ajuste */
+.text-container2:hover {
+    width: auto;
+}
+
+.text-container2:hover .hidden-text2 {
+    max-width: 250px;
+}
+
+/* Animation du bord du conteneur */
+.border-animation2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    mix-blend-mode: difference; /* Applique le mode de fusion différence au tracé */
+    z-index: 1; /* Assurez-vous que la box est derrière le texte */
+}
+
+.rect-border2 {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 8;
+    transition: stroke-dashoffset 0.5s ease-in-out, stroke-dasharray 0.5s ease-in-out;
+}
+
+/* La boîte de remplissage pour l'animation */
+.fill-rect2 {
+    fill: rgba(255, 255, 255, 0.2); /* Ajustez la couleur pour être plus visible */
+    backdrop-filter: blur(30px);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Animation lors du clic pour remplir la boîte */
+.text-container2:active .fill-rect2 {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Effet supplémentaire de flou à l'extérieur de la boîte */
+.text-container2::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    filter: blur(15px); /* Ajoute un flou à l'extérieur de la box */
+    z-index: -1; /* Placez derrière le conteneur de texte */
+}

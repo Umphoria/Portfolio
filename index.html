@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alexandre Scariot - Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -9,33 +10,60 @@
   <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100">
+<body>
   <!-- Header avec logo et menu de navigation -->
   <header id="main-header" class="flex justify-between items-center p-6">
     <div class="text-lg font-light">
       <span class="font-bold">Alexandre Scariot</span> — Mes Projets
     </div>
-    <nav class="flex space-x-6 text-sm">
+    
+    <!-- Icône de menu pour les petits écrans -->
+    <div id="hamburger-menu" class="md:hidden cursor-pointer z-50" aria-label="Toggle navigation menu" role="button">
+      <i class="fas fa-bars text-2xl"></i> <!-- Icône de menu hamburger -->
+    </div>
+
+    <!-- Navigation principale (cachée sur les petits écrans) -->
+    <nav id="main-nav" class="hidden md:flex space-x-6 text-sm">
       <a class="nav-button" href="#">Work</a>
-      <a class="nav-button" href="#about">About Me</a>
+      <a class="nav-button" id="about-me-button" href="#about">
+        <span class="button-text">About Me</span>
+      </a>
       <a class="nav-button" href="#">Contact</a>
     </nav>
-</header>
 
-<div id="about-me-container" class="about-me-container">
-  <div class="about-me-content">
-    <h1 class="about-title">À propos de moi</h1>
-    <p class="about-text">
-      Je m'appelle Alexandre Scariot, développeur passionné par la création de solutions numériques interactives. Mon expertise en développement web, combinée à une approche centrée sur l'utilisateur, me permet de créer des expériences visuelles uniques. <br><br>
-      Découvrez mes projets pour en savoir plus sur mon parcours et mes compétences.
-    </p>
-    <!-- Bouton de fermeture stylé -->
-    <button id="close-about" class="close-button">Retour</button>
-  </div>
-</div>
+    <!-- Menu déroulant mobile caché par défaut -->
+    <nav id="mobile-menu" class="mobile-menu">
+      <a class="mobile-nav-button" href="#">Work</a>
+      <a class="mobile-nav-button" href="#about">About Me</a>
+      <a class="mobile-nav-button" href="#">Contact</a>
+    </nav>
+    
+  </header>
 
-  
-  
+  <!-- Nouveau Contenu ajouté avant la vidéo -->
+  <a class="link-container2">
+      <div class="text-container2">
+          <div class="text-content2">
+              <span class="base-text2">Ü</span>
+              <span class="hidden-text2"> MPHORIA</span>
+          </div>
+          <svg class="border-animation2" xmlns="http://www.w3.org/2000/svg">
+              <rect class="rect-border2" x="0" y="0" rx="0" ry="0"></rect>
+              <rect class="fill-rect2" x="0" y="0" rx="0" ry="0"></rect>
+          </svg>
+      </div>
+  </a>
+
+  <!-- Vidéo en arrière-plan -->
+  <div class="video-background fade-in reveal" scroll="reveal">
+    <video class="hero-video" muted autoplay loop playsinline>
+        <source src="https://tendril.studio/wp-content/uploads/2022/12/LandingPage.mp4" type="video/mp4">
+    </video>
+  </div> <!-- Correction : Fermeture manquante ajoutée ici -->
+
+  <!-- Espace vide pour mettre en valeur la vidéo -->
+  <div class="hero-spacer"></div>
+
   <!-- Section principale avec les projets dynamiques -->
   <main class="p-6">
     <div class="max-w-screen-xl mx-auto">
@@ -44,16 +72,45 @@
       </div>
     </div>
   </main>
-  
+
+  <div id="about-me-container" class="about-me-container">
+    <div class="about-me-content">
+      <h1 class="about-title">ABOUT ME</h1>
+      <p class="about-text">
+        I work as an Artistic Director and 3D Generalist at Studio river <br>
+        I am available for artistic collaborations
+      </p>
+      <!-- Liens vers les réseaux sociaux -->
+      <ul class="social-links">
+        <li>
+          <a href="https://www.behance.net/alexandre7bba9" target="_blank">
+            <i class="fab fa-behance"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/umphoria" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://vimeo.com/user87503592" target="_blank">
+            <i class="fab fa-vimeo"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://soundcloud.com/scariotmusic" target="_blank">
+            <i class="fab fa-soundcloud"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <!-- Inclusion du fichier JavaScript -->
-  <script src="js/smoothScroll.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
-  <script src="js/glitchEffect.js"></script> <!-- Inclusion du script pour l'effet glitch -->
-  <script src="js/app.js"></script>
+  <script src="js/smoothScroll.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js" defer></script>
+  <script src="js/glitchEffect.js" defer></script> <!-- Inclusion du script pour l'effet glitch -->
+  <script src="js/app.js" defer></script>
 
-
-
-  
 </body>
 </html>
